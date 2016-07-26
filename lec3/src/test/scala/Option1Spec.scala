@@ -23,5 +23,8 @@ class Option1Spec  extends FlatSpec with Matchers {
   "GetOrElse on Some" should "return returns get" in {
     Some("String") getOrElse (1, 2) shouldBe  "String"
   }
+  "flatMap on Some(1)" should "return " in {
+    Some("1").flatMap(s => Some(s.toInt)) shouldBe Some(1)
+  }
 
 }

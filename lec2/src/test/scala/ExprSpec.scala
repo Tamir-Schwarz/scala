@@ -10,7 +10,7 @@ import Main._
 class ExprSpec extends FlatSpec with Matchers {
 
   "A top level double negation " should "be simplified " in {
-      simplify(UnOp("-", UnOp("-", Var("x")))) should be (Var("x"))
+    simplify(UnOp("-", UnOp("-", Var("x")))) should be (Var("x"))
   }
 
   "expr + 0" should "simplified to expr" in {
