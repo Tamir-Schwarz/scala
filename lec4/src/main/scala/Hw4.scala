@@ -23,20 +23,21 @@ object Hw4 {
       case Right(a) => Right(a)
     }
 
-    def sequence[E, A](es: List[Either[E, A]]): Either[E, List[A]] = {
-      es match {
-        case Nil => Right(Nil)
-        case head :: tail => head.flatMap(headvalue => sequence(tail).map( tailvalue => headvalue :: tailvalue))
-      }
-    }
 
-    def traverse[E, A, B](as: List[A])(f: A => Either[E, B]): Either[E, List[B]] = {
-      as match {
-        case Nil => Right(Nil)
-        case head :: tail => f(head).flatMap(headvalue => traverse(tail)(f).map(tailvalue => headvalue :: tailvalue))
-      }
-    }
 
+  }
+  def sequence[E, A](es: List[Either[E, A]]): Either[E, List[A]] = {
+    es match {
+      case Nil => Right(Nil)
+      case head :: tail => head.flatMap(headvalue => sequence(tail).map( tailvalue => headvalue :: tailvalue))
+    }
+  }
+
+  def traverse[E, A, B](as: List[A])(f: A => Either[E, B]): Either[E, List[B]] = {
+    as match {
+      case Nil => Right(Nil)
+      case head :: tail => f(head).flatMap(headvalue => traverse(tail)(f).map(tailvalue => headvalue :: tailvalue))
+    }
   }
 
   case class Left[+E](value: E) extends Either[E, Nothing]

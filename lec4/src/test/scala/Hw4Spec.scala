@@ -36,15 +36,20 @@ class Hw4Spec  extends FlatSpec with Matchers {
   }
 
   "Right(42) sequence on List(Right(1), Right(2), Right(3))" should "return Right(List(1,2, 3)" in {
-    Right(42) sequence List(Right(1), Right(2), Right(3)) shouldBe Right(List(1,2, 3))
+    sequence (List(Right(1), Right(2), Right(3))) shouldBe Right(List(1,2, 3))
   }
 
   "Right(42) sequence on List(Right(1), Left(Error), Right(3))" should "return Left(Error)" in {
-    Right(42) sequence List(Right(1), Left("Error"), Right(3)) shouldBe Left("Error")
+    sequence (List(Right(1), Left("Error"), Right(3))) shouldBe Left("Error")
   }
 
   "Right(42) traverse on List(1, 2, 3)" should "return Right(List(1,2, 3)" in {
-    Right(42).traverse(List(1, 2, 3))((n: Int)=> Right(n + 2))   shouldBe Right(List(3,4, 5))
+    traverse(List(1, 2, 3))((n: Int)=> Right(n + 2))   shouldBe Right(List(3,4, 5))
+  }
+
+  "traverse on List(2,4,5,6) and " should "return Left(odd)" in {
+    def f(i: Int): Either[String, Int] = {if (i % 2 == 0) Right(i+1) else Left("odd")}
+    traverse(List(2,4,5,6))(f) shouldBe Left("odd")
   }
 
   //  "Right(42) traverse on List(Right(1), Left(Error), Right(3))" should "return Left(Error)" in {
